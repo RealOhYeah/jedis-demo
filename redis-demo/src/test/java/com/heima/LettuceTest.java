@@ -22,6 +22,10 @@ public class LettuceTest {
     @Resource
     private RedisConnectionFactory connectionFactory;
 
+    /**
+     * 测试lettuce的客户端缓存
+     * @throws Exception
+     */
     @Test
     void testClientCache() throws Exception {
         RedisConnection connection = connectionFactory.getConnection();

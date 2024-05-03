@@ -12,6 +12,9 @@ class RedisDemoApplicationTests {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    /**
+     * redis简单的写入和获取String类型的String类型的数据
+     */
     @Test
     void testString() {
         // 写入一条String数据
@@ -21,6 +24,9 @@ class RedisDemoApplicationTests {
         System.out.println("name = " + name);
     }
 
+    /**
+     * redis简单的写入和获取String类型的对象类型数据
+     */
     @Test
     void testSaveUser() {
         // 写入数据

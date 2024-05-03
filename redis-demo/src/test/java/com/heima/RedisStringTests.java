@@ -21,6 +21,9 @@ class RedisStringTests {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 使用StringRedisTemplate，来测试写入redis字符串键值对(它的key和value的序列化方式默认就是String方式)。
+     */
     @Test
     void testString() {
         // 写入一条String数据
@@ -32,6 +35,10 @@ class RedisStringTests {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     * 序列化兑现然后获取之后进行反序列化
+     * @throws JsonProcessingException
+     */
     @Test
     void testSaveUser() throws JsonProcessingException {
         // 创建对象
@@ -48,6 +55,9 @@ class RedisStringTests {
         System.out.println("user1 = " + user1);
     }
 
+    /**
+     * 在reids中存储并取出hash类型数据
+     */
     @Test
     void testHash() {
         stringRedisTemplate.opsForHash().put("user:400", "name", "虎哥");
@@ -58,6 +68,9 @@ class RedisStringTests {
     }
 
 
+    /**
+     * 测试普通的大量写入命令的效率
+     */
     @Test
     void testNormal() {
         long begin = System.currentTimeMillis();
@@ -69,7 +82,9 @@ class RedisStringTests {
     }
 
 
-
+    /**
+     * 测试mset批量写入命令
+     */
     @Test
     void testMset() {
         long begin = System.currentTimeMillis();
@@ -85,6 +100,10 @@ class RedisStringTests {
         System.out.println("mset耗时 = " + (end - begin));
     }
 
+
+    /**
+     * 测试Pipeline批量写入耗时
+     */
     @Test
     void testPipeline() {
         long begin = System.currentTimeMillis();
@@ -105,6 +124,9 @@ class RedisStringTests {
         System.out.println("Pipeline耗时 = " + (end - begin));
     }
 
+    /**
+     * 将BigKey的数据通过hash的方式写入，测试运行效率
+     */
     @Test
     void testBigHash() {
         Map<String, String> map = new HashMap<>(1000);
@@ -117,6 +139,9 @@ class RedisStringTests {
         }
     }
 
+    /**
+     * 将BigKey的数据通过分成小份的hashmap写入，测试效率
+     */
     @Test
     void testSmallHash() {
         Map<String, String> map = new HashMap<>(1000);
@@ -129,6 +154,9 @@ class RedisStringTests {
         }
     }
 
+    /**
+     *  Spring集群环境下批处理代码（下方使用并行slot方法）
+     */
     @Test
     void testMSetInCluster() {
         Map<String, String> map = new HashMap<>(3);
